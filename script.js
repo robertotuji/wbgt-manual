@@ -382,38 +382,99 @@ const wbgtTable = {
   }
 };
 
+const i18n = {
+  jp: {
+    title: "WBGT手動チェッカー",
+    temp: "気温 (°C)",
+    hum: "湿度 (%)",
+    calc: "WBGTを計算",
+    clear: "クリア",
+    select: "選択",
+    danger: ["ほぼ安全", "注意", "警戒", "厳重警戒", "危険"],
+    error: "⚠️ データが見つかりません。"
+  },
+  pt: {
+    title: "Verificador WBGT Manual",
+    temp: "Temperatura (°C)",
+    hum: "Umidade (%)",
+    calc: "Calcular WBGT",
+    clear: "Limpar",
+    select: "Selecionar",
+    danger: ["Seguro", "Atenção", "Alerta", "Alerta Grave", "Perigo"],
+    error: "⚠️ Valor fora da faixa da tabela."
+  },
+  en: {
+    title: "WBGT Manual Checker",
+    temp: "Temperature (°C)",
+    hum: "Humidity (%)",
+    calc: "Calculate WBGT",
+    clear: "Clear",
+    select: "Select",
+    danger: ["Safe", "Caution", "Warning", "High Risk", "Danger"],
+    error: "⚠️ Value out of range."
+  },
+  id: {
+    title: "Pemeriksa WBGT Manual",
+    temp: "Suhu (°C)",
+    hum: "Kelembaban (%)",
+    calc: "Hitung WBGT",
+    clear: "Hapus",
+    select: "Pilih",
+    danger: ["Aman", "Perhatian", "Waspada", "Waspada Ekstrem", "Bahaya"],
+    error: "⚠️ Nilai di luar jangkauan."
+  }
+};
+
+function updateLanguage(lang) {
+  const t = i18n[lang];
+  document.getElementById("title").textContent = t.title;
+  document.getElementById("html-title").textContent = t.title;
+  document.getElementById("label-temp").textContent = t.temp;
+  document.getElementById("label-hum").textContent = t.hum;
+  document.getElementById("calculate").textContent = t.calc;
+  document.getElementById("clear").textContent = t.clear;
+  document.getElementById("select-default").textContent = t.select;
+}
+
+document.getElementById("language-select").addEventListener("change", e => {
+  updateLanguage(e.target.value);
+});
 document.getElementById("toggle-theme").addEventListener("click", () => {
   document.body.classList.toggle("dark");
 });
-
 document.getElementById("calculate").addEventListener("click", () => {
   const temp = document.getElementById("temperature").value;
   const hum = document.getElementById("humidity").value;
+  const lang = document.getElementById("language-select").value;
   const resultEl = document.getElementById("result");
   const resultBox = document.getElementById("result-box");
+  const danger = i18n[lang].danger;
+  const fallback = i18n[lang].error;
 
   if (!wbgtTable[temp] || !wbgtTable[temp][hum]) {
     resultBox.style.background = "#ddd";
-    resultEl.innerHTML = "⚠️ データが見つかりません。";
+    resultEl.innerHTML = fallback;
     return;
   }
 
   const wbgt = wbgtTable[temp][hum];
   let color = "", label = "";
 
-  if (wbgt < 21) { color = "deepskyblue"; label = "ほぼ安全"; }
-  else if (wbgt < 25) { color = "gold"; label = "注意"; }
-  else if (wbgt < 28) { color = "orange"; label = "警戒"; }
-  else if (wbgt < 31) { color = "orangered"; label = "厳重警戒"; }
-  else { color = "red"; label = "危険"; }
+  if (wbgt < 21) { color = "deepskyblue"; label = danger[0]; }
+  else if (wbgt < 25) { color = "gold"; label = danger[1]; }
+  else if (wbgt < 28) { color = "orange"; label = danger[2]; }
+  else if (wbgt < 31) { color = "orangered"; label = danger[3]; }
+  else { color = "red"; label = danger[4]; }
 
   resultBox.style.background = color;
   resultEl.innerHTML = `WBGT: ${wbgt}°C<br><strong>${label}</strong>`;
 });
-
 document.getElementById("clear").addEventListener("click", () => {
   document.getElementById("temperature").value = "";
   document.getElementById("humidity").value = "";
   document.getElementById("result").innerHTML = "";
   document.getElementById("result-box").style.background = "transparent";
 });
+
+// Inicializa com o idioma padrão
+updateLanguage("jp");
