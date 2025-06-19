@@ -382,45 +382,38 @@ const wbgtTable = {
   }
 };
 
-const languageOptions = {
-  pt: { title: "Verificador WBGT Manual", temp: "Temperatura (°C)", hum: "Umidade (%)", calc: "Calcular WBGT" },
-  en: { title: "WBGT Manual Checker", temp: "Temperature (°C)", hum: "Humidity (%)", calc: "Calculate WBGT" },
-  jp: { title: "WBGT手動チェッカー", temp: "気温 (°C)", hum: "湿度 (%)", calc: "WBGTを計算" },
-  id: { title: "Pemeriksa WBGT Manual", temp: "Suhu (°C)", hum: "Kelembaban (%)", calc: "Hitung WBGT" },
-};
-
 document.getElementById("toggle-theme").addEventListener("click", () => {
   document.body.classList.toggle("dark");
-});
-
-document.getElementById("language-select").addEventListener("change", (e) => {
-  const lang = e.target.value;
-  const labels = languageOptions[lang];
-  document.getElementById("title").textContent = labels.title;
-  document.getElementById("label-temp").textContent = labels.temp;
-  document.getElementById("label-hum").textContent = labels.hum;
-  document.getElementById("calculate").textContent = labels.calc;
 });
 
 document.getElementById("calculate").addEventListener("click", () => {
   const temp = document.getElementById("temperature").value;
   const hum = document.getElementById("humidity").value;
   const resultEl = document.getElementById("result");
+  const resultBox = document.getElementById("result-box");
 
   if (!wbgtTable[temp] || !wbgtTable[temp][hum]) {
-    resultEl.innerHTML = "⚠️ Valores fora da faixa da tabela.";
-    resultEl.style.color = "red";
+    resultBox.style.background = "#ddd";
+    resultEl.innerHTML = "⚠️ データが見つかりません。";
     return;
   }
 
   const wbgt = wbgtTable[temp][hum];
-  let color = "", risk = "";
+  let color = "", label = "";
 
-  if (wbgt < 21) { color = "blue"; risk = "Seguro"; }
-  else if (wbgt < 25) { color = "gold"; risk = "Atenção"; }
-  else if (wbgt < 28) { color = "orange"; risk = "Alerta"; }
-  else if (wbgt < 31) { color = "orangered"; risk = "Alerta Grave"; }
-  else { color = "red"; risk = "Perigo"; }
+  if (wbgt < 21) { color = "deepskyblue"; label = "ほぼ安全"; }
+  else if (wbgt < 25) { color = "gold"; label = "注意"; }
+  else if (wbgt < 28) { color = "orange"; label = "警戒"; }
+  else if (wbgt < 31) { color = "orangered"; label = "厳重警戒"; }
+  else { color = "red"; label = "危険"; }
 
-  resultEl.innerHTML = `WBGT: ${wbgt}°C<br><span style="color:${color}">Risco: ${risk}</span>`;
+  resultBox.style.background = color;
+  resultEl.innerHTML = `WBGT: ${wbgt}°C<br><strong>${label}</strong>`;
+});
+
+document.getElementById("clear").addEventListener("click", () => {
+  document.getElementById("temperature").value = "";
+  document.getElementById("humidity").value = "";
+  document.getElementById("result").innerHTML = "";
+  document.getElementById("result-box").style.background = "transparent";
 });
