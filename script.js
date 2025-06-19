@@ -163,7 +163,7 @@ const wbgtTable = {
     "55": 29,
     "60": 30,
     "65": 31,
-    "70": 32,
+    "70": 31,
     "75": 32,
     "80": 33,
     "85": 34,
@@ -182,7 +182,7 @@ const wbgtTable = {
     "55": 28,
     "60": 29,
     "65": 30,
-    "70": 31,
+    "70": 30,
     "75": 31,
     "80": 32,
     "85": 33,
@@ -201,7 +201,7 @@ const wbgtTable = {
     "55": 27,
     "60": 28,
     "65": 29,
-    "70": 30,
+    "70": 29,
     "75": 30,
     "80": 31,
     "85": 32,
@@ -217,7 +217,7 @@ const wbgtTable = {
     "40": 24,
     "45": 24,
     "50": 25,
-    "55": 27,
+    "55": 26,
     "60": 27,
     "65": 28,
     "70": 29,
@@ -236,11 +236,11 @@ const wbgtTable = {
     "40": 23,
     "45": 23,
     "50": 24,
-    "55": 26,
+    "55": 25,
     "60": 26,
     "65": 27,
     "70": 28,
-    "75": 29,
+    "75": 28,
     "80": 29,
     "85": 30,
     "90": 31,
@@ -255,15 +255,15 @@ const wbgtTable = {
     "40": 22,
     "45": 23,
     "50": 23,
-    "55": 25,
-    "60": 26,
-    "65": 27,
-    "70": 28,
-    "75": 28,
-    "80": 29,
-    "85": 30,
+    "55": 24,
+    "60": 25,
+    "65": 26,
+    "70": 26,
+    "75": 27,
+    "80": 28,
+    "85": 29,
     "90": 30,
-    "95": 31,
+    "95": 30,
     "100": 31
   },
   "26": {
@@ -274,15 +274,15 @@ const wbgtTable = {
     "40": 21,
     "45": 22,
     "50": 22,
-    "55": 25,
-    "60": 25,
-    "65": 26,
-    "70": 27,
-    "75": 27,
-    "80": 28,
-    "85": 29,
+    "55": 23,
+    "60": 24,
+    "65": 25,
+    "70": 25,
+    "75": 26,
+    "80": 27,
+    "85": 28,
     "90": 29,
-    "95": 30,
+    "95": 29,
     "100": 30
   },
   "25": {
@@ -293,13 +293,13 @@ const wbgtTable = {
     "40": 20,
     "45": 21,
     "50": 22,
-    "55": 24,
+    "55": 23,
     "60": 24,
-    "65": 25,
-    "70": 26,
+    "65": 24,
+    "70": 25,
     "75": 26,
     "80": 27,
-    "85": 28,
+    "85": 27,
     "90": 28,
     "95": 29,
     "100": 29
@@ -312,13 +312,13 @@ const wbgtTable = {
     "40": 19,
     "45": 20,
     "50": 21,
-    "55": 23,
+    "55": 22,
     "60": 23,
-    "65": 24,
-    "70": 25,
+    "65": 23,
+    "70": 24,
     "75": 25,
     "80": 26,
-    "85": 27,
+    "85": 26,
     "90": 27,
     "95": 28,
     "100": 28
@@ -331,13 +331,13 @@ const wbgtTable = {
     "40": 19,
     "45": 19,
     "50": 20,
-    "55": 22,
+    "55": 21,
     "60": 22,
-    "65": 23,
-    "70": 24,
+    "65": 22,
+    "70": 23,
     "75": 24,
     "80": 25,
-    "85": 26,
+    "85": 25,
     "90": 26,
     "95": 27,
     "100": 27
@@ -350,15 +350,15 @@ const wbgtTable = {
     "40": 18,
     "45": 18,
     "50": 19,
-    "55": 21,
-    "60": 22,
-    "65": 22,
-    "70": 23,
+    "55": 20,
+    "60": 21,
+    "65": 21,
+    "70": 22,
     "75": 23,
-    "80": 24,
-    "85": 25,
+    "80": 23,
+    "85": 24,
     "90": 25,
-    "95": 26,
+    "95": 25,
     "100": 26
   },
   "21": {
@@ -369,30 +369,20 @@ const wbgtTable = {
     "40": 17,
     "45": 17,
     "50": 18,
-    "55": 20,
-    "60": 21,
-    "65": 22,
-    "70": 22,
-    "75": 23,
-    "80": 23,
-    "85": 24,
-    "90": 25,
-    "95": 25,
-    "100": 25
+    "55": 19,
+    "60": 20,
+    "65": 20,
+    "70": 21,
+    "75": 22,
+    "80": 22,
+    "85": 23,
+    "90": 24,
+    "95": 24,
+    "100": 24
   }
 };
 
 const i18n = {
-  jp: {
-    title: "WBGT手動チェッカー",
-    temp: "気温 (°C)",
-    hum: "湿度 (%)",
-    calc: "WBGTを計算",
-    clear: "クリア",
-    select: "選択",
-    danger: ["ほぼ安全", "注意", "警戒", "厳重警戒", "危険"],
-    error: "⚠️ データが見つかりません。"
-  },
   pt: {
     title: "Verificador WBGT Manual",
     temp: "Temperatura (°C)",
@@ -403,32 +393,21 @@ const i18n = {
     danger: ["Seguro", "Atenção", "Alerta", "Alerta Grave", "Perigo"],
     error: "⚠️ Valor fora da faixa da tabela."
   },
-  en: {
-    title: "WBGT Manual Checker",
-    temp: "Temperature (°C)",
-    hum: "Humidity (%)",
-    calc: "Calculate WBGT",
-    clear: "Clear",
-    select: "Select",
-    danger: ["Safe", "Caution", "Warning", "High Risk", "Danger"],
-    error: "⚠️ Value out of range."
-  },
-  id: {
-    title: "Pemeriksa WBGT Manual",
-    temp: "Suhu (°C)",
-    hum: "Kelembaban (%)",
-    calc: "Hitung WBGT",
-    clear: "Hapus",
-    select: "Pilih",
-    danger: ["Aman", "Perhatian", "Waspada", "Waspada Ekstrem", "Bahaya"],
-    error: "⚠️ Nilai di luar jangkauan."
+  jp: {
+    title: "WBGT手動チェッカー",
+    temp: "気温 (°C)",
+    hum: "湿度 (%)",
+    calc: "WBGTを計算",
+    clear: "クリア",
+    select: "選択",
+    danger: ["ほぼ安全", "注意", "警戒", "厳重警戒", "危険"],
+    error: "⚠️ データが見つかりません。"
   }
 };
 
 function updateLanguage(lang) {
   const t = i18n[lang];
   document.getElementById("title").textContent = t.title;
-  document.getElementById("html-title").textContent = t.title;
   document.getElementById("label-temp").textContent = t.temp;
   document.getElementById("label-hum").textContent = t.hum;
   document.getElementById("calculate").textContent = t.calc;
@@ -439,35 +418,33 @@ function updateLanguage(lang) {
 document.getElementById("language-select").addEventListener("change", e => {
   updateLanguage(e.target.value);
 });
-document.getElementById("toggle-theme").addEventListener("click", () => {
-  document.body.classList.toggle("dark");
-});
 document.getElementById("calculate").addEventListener("click", () => {
   const temp = document.getElementById("temperature").value;
   const hum = document.getElementById("humidity").value;
   const lang = document.getElementById("language-select").value;
   const resultEl = document.getElementById("result");
   const resultBox = document.getElementById("result-box");
-  const danger = i18n[lang].danger;
-  const fallback = i18n[lang].error;
+  const t = i18n[lang];
 
   if (!wbgtTable[temp] || !wbgtTable[temp][hum]) {
     resultBox.style.background = "#ddd";
-    resultEl.innerHTML = fallback;
+    resultEl.innerHTML = t.error;
     return;
   }
 
   const wbgt = wbgtTable[temp][hum];
+  console.log(`WBGT Lookup: temp={temp}, hum={hum} → WBGT={wbgt}`);
+
   let color = "", label = "";
 
-  if (wbgt < 21) { color = "deepskyblue"; label = danger[0]; }
-  else if (wbgt < 25) { color = "gold"; label = danger[1]; }
-  else if (wbgt < 28) { color = "orange"; label = danger[2]; }
-  else if (wbgt < 31) { color = "orangered"; label = danger[3]; }
-  else { color = "red"; label = danger[4]; }
+  if (wbgt < 21) { color = "deepskyblue"; label = t.danger[0]; }
+  else if (wbgt < 25) { color = "gold"; label = t.danger[1]; }
+  else if (wbgt < 28) { color = "orange"; label = t.danger[2]; }
+  else if (wbgt < 31) { color = "orangered"; label = t.danger[3]; }
+  else { color = "red"; label = t.danger[4]; }
 
   resultBox.style.background = color;
-  resultEl.innerHTML = `WBGT: ${wbgt}°C<br><strong>${label}</strong>`;
+  resultEl.innerHTML = `WBGT: {wbgt}°C<br><strong>{label}</strong>`;
 });
 document.getElementById("clear").addEventListener("click", () => {
   document.getElementById("temperature").value = "";
@@ -476,5 +453,5 @@ document.getElementById("clear").addEventListener("click", () => {
   document.getElementById("result-box").style.background = "transparent";
 });
 
-// Inicializa com o idioma padrão
-updateLanguage("jp");
+// Inicializar com idioma padrão
+updateLanguage("pt");
