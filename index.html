@@ -3,50 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WBGT Manual</title>
-  <link rel="manifest" href="manifest.json" />
+  <title>WBGT Checker - Manual</title>
   <link rel="stylesheet" href="style.css" />
-  <script>
-    if ("serviceWorker" in navigator) {
-      window.addEventListener("load", function () {
-        navigator.serviceWorker.register("service-worker.js").then(
-          function (registration) {
-            console.log("ServiceWorker registrado com sucesso:", registration.scope);
-          },
-          function (err) {
-            console.log("Falha ao registrar o ServiceWorker:", err);
-          }
-        );
-      });
-    }
-  </script>
 </head>
 <body>
-  <header>
-    <h1>WBGT Manual</h1>
-    <button id="toggle-theme">🌗</button>
-  </header>
-
-  <main>
-    <section id="manual-input">
-      <label>Temperatura (°C): <input type="number" id="input-temp" min="21" max="40" /></label><br />
-      <label>Umidade (%): <input type="number" id="input-hum" min="20" max="100" /></label><br />
-      <button onclick="calcularWBGT()">Calcular</button>
-      <button onclick="limpar()">🧹 Limpar</button>
-    </section>
-
-    <section id="result">
-      <p><strong>Temperatura:</strong> <span id="out-temp">--</span> °C</p>
-      <p><strong>Umidade:</strong> <span id="out-hum">--</span> %</p>
-      <p><strong>WBGT:</strong> <span id="out-wbgt">--</span></p>
-      <div id="nivel" class="alert-box">---</div>
-    </section>
-  </main>
-
-  <footer>
-    <small>Desenvolvido por Roberto Tuji - WBGT Manual 2025</small>
-  </footer>
-
+  <div class="container">
+    <div class="header">
+      <h1 id="title">Verificador WBGT Manual</h1>
+      <select id="language-select">
+        <option value="pt">🇧🇷 Português</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="jp">🇯🇵 日本語</option>
+        <option value="id">🇮🇩 Bahasa</option>
+      </select>
+      <button id="toggle-theme">🌙</button>
+    </div>
+    <label for="temperature" id="label-temp">Temperatura (°C)</label>
+    <input type="number" id="temperature" />
+    <label for="humidity" id="label-hum">Umidade (%)</label>
+    <input type="number" id="humidity" />
+    <button id="calculate">Calcular WBGT</button>
+    <div id="result"></div>
+  </div>
   <script src="script.js"></script>
 </body>
 </html>
