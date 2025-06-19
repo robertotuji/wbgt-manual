@@ -418,6 +418,9 @@ function updateLanguage(lang) {
 document.getElementById("language-select").addEventListener("change", e => {
   updateLanguage(e.target.value);
 });
+document.getElementById("toggle-theme").addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+});
 document.getElementById("calculate").addEventListener("click", () => {
   const temp = document.getElementById("temperature").value;
   const hum = document.getElementById("humidity").value;
@@ -433,8 +436,6 @@ document.getElementById("calculate").addEventListener("click", () => {
   }
 
   const wbgt = wbgtTable[temp][hum];
-  console.log(`WBGT Lookup: temp={temp}, hum={hum} → WBGT={wbgt}`);
-
   let color = "", label = "";
 
   if (wbgt < 21) { color = "deepskyblue"; label = t.danger[0]; }
@@ -444,7 +445,7 @@ document.getElementById("calculate").addEventListener("click", () => {
   else { color = "red"; label = t.danger[4]; }
 
   resultBox.style.background = color;
-  resultEl.innerHTML = `WBGT: {wbgt}°C<br><strong>{label}</strong>`;
+  resultEl.innerHTML = `WBGT: ${wbgt}°C<br><strong>${label}</strong>`;
 });
 document.getElementById("clear").addEventListener("click", () => {
   document.getElementById("temperature").value = "";
@@ -453,5 +454,4 @@ document.getElementById("clear").addEventListener("click", () => {
   document.getElementById("result-box").style.background = "transparent";
 });
 
-// Inicializar com idioma padrão
 updateLanguage("pt");
