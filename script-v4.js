@@ -28,14 +28,14 @@ const wbgtTable = {
     "45": 33,
     "50": 34,
     "55": 35,
-    "60": 36,
-    "65": 37,
-    "70": 38,
-    "75": 39,
-    "80": 40,
-    "85": 41,
-    "90": 42,
-    "95": 43,
+    "60": 35,
+    "65": 36,
+    "70": 37,
+    "75": 38,
+    "80": 39,
+    "85": 40,
+    "90": 41,
+    "95": 42,
     "100": 43
   },
   "38": {
@@ -46,15 +46,15 @@ const wbgtTable = {
     "40": 31,
     "45": 32,
     "50": 33,
-    "55": 35,
+    "55": 34,
     "60": 35,
-    "65": 36,
-    "70": 37,
-    "75": 38,
-    "80": 39,
-    "85": 40,
-    "90": 41,
-    "95": 42,
+    "65": 35,
+    "70": 36,
+    "75": 37,
+    "80": 38,
+    "85": 39,
+    "90": 40,
+    "95": 41,
     "100": 42
   },
   "37": {
@@ -65,15 +65,15 @@ const wbgtTable = {
     "40": 30,
     "45": 31,
     "50": 32,
-    "55": 35,
+    "55": 33,
     "60": 35,
     "65": 35,
-    "70": 36,
-    "75": 37,
-    "80": 38,
-    "85": 39,
-    "90": 40,
-    "95": 41,
+    "70": 35,
+    "75": 36,
+    "80": 37,
+    "85": 38,
+    "90": 39,
+    "95": 40,
     "100": 41
   },
   "36": {
@@ -84,16 +84,16 @@ const wbgtTable = {
     "40": 29,
     "45": 30,
     "50": 31,
-    "55": 33,
-    "60": 34,
+    "55": 32,
+    "60": 33,
     "65": 34,
-    "70": 35,
-    "75": 36,
-    "80": 37,
-    "85": 38,
-    "90": 39,
-    "95": 40,
-    "100": 40
+    "70": 34,
+    "75": 35,
+    "80": 36,
+    "85": 37,
+    "90": 38,
+    "95": 39,
+    "100": 39
   },
   "35": {
     "20": 25,
@@ -103,25 +103,6 @@ const wbgtTable = {
     "40": 29,
     "45": 29,
     "50": 30,
-    "55": 32,
-    "60": 33,
-    "65": 33,
-    "70": 34,
-    "75": 35,
-    "80": 36,
-    "85": 37,
-    "90": 38,
-    "95": 39,
-    "100": 39
-  },
-  "34": {
-    "20": 25,
-    "25": 25,
-    "30": 26,
-    "35": 27,
-    "40": 28,
-    "45": 29,
-    "50": 29,
     "55": 31,
     "60": 32,
     "65": 33,
@@ -133,14 +114,14 @@ const wbgtTable = {
     "95": 38,
     "100": 38
   },
-  "33": {
-    "20": 24,
+  "34": {
+    "20": 25,
     "25": 25,
-    "30": 25,
-    "35": 26,
-    "40": 27,
-    "45": 28,
-    "50": 28,
+    "30": 26,
+    "35": 27,
+    "40": 28,
+    "45": 29,
+    "50": 29,
     "55": 30,
     "60": 31,
     "65": 32,
@@ -152,6 +133,25 @@ const wbgtTable = {
     "95": 37,
     "100": 37
   },
+  "33": {
+    "20": 24,
+    "25": 25,
+    "30": 25,
+    "35": 26,
+    "40": 27,
+    "45": 28,
+    "50": 28,
+    "55": 29,
+    "60": 30,
+    "65": 31,
+    "70": 32,
+    "75": 32,
+    "80": 33,
+    "85": 34,
+    "90": 35,
+    "95": 35,
+    "100": 36
+  },
   "32": {
     "20": 23,
     "25": 24,
@@ -160,16 +160,16 @@ const wbgtTable = {
     "40": 26,
     "45": 27,
     "50": 28,
-    "55": 29,
-    "60": 30,
-    "65": 31,
+    "55": 28,
+    "60": 29,
+    "65": 30,
     "70": 31,
-    "75": 32,
-    "80": 33,
-    "85": 34,
-    "90": 35,
-    "95": 35,
-    "100": 36
+    "75": 31,
+    "80": 32,
+    "85": 33,
+    "90": 34,
+    "95": 34,
+    "100": 35
   },
   "31": {
     "20": 22,
@@ -179,16 +179,16 @@ const wbgtTable = {
     "40": 25,
     "45": 26,
     "50": 27,
-    "55": 28,
-    "60": 29,
-    "65": 30,
+    "55": 27,
+    "60": 28,
+    "65": 29,
     "70": 30,
-    "75": 31,
-    "80": 32,
-    "85": 33,
-    "90": 34,
-    "95": 34,
-    "100": 35
+    "75": 30,
+    "80": 31,
+    "85": 32,
+    "90": 33,
+    "95": 33,
+    "100": 34
   },
   "30": {
     "20": 21,
@@ -199,25 +199,6 @@ const wbgtTable = {
     "45": 25,
     "50": 26,
     "55": 27,
-    "60": 28,
-    "65": 29,
-    "70": 29,
-    "75": 30,
-    "80": 31,
-    "85": 32,
-    "90": 33,
-    "95": 33,
-    "100": 34
-  },
-  "29": {
-    "20": 21,
-    "25": 21,
-    "30": 22,
-    "35": 23,
-    "40": 24,
-    "45": 24,
-    "50": 25,
-    "55": 26,
     "60": 27,
     "65": 28,
     "70": 29,
@@ -228,6 +209,25 @@ const wbgtTable = {
     "95": 32,
     "100": 33
   },
+  "29": {
+    "20": 21,
+    "25": 21,
+    "30": 22,
+    "35": 23,
+    "40": 24,
+    "45": 24,
+    "50": 25,
+    "55": 26,
+    "60": 26,
+    "65": 27,
+    "70": 28,
+    "75": 29,
+    "80": 29,
+    "85": 30,
+    "90": 31,
+    "95": 31,
+    "100": 32
+  },
   "28": {
     "20": 20,
     "25": 21,
@@ -237,15 +237,15 @@ const wbgtTable = {
     "45": 23,
     "50": 24,
     "55": 25,
-    "60": 26,
-    "65": 27,
-    "70": 28,
+    "60": 25,
+    "65": 26,
+    "70": 27,
     "75": 28,
-    "80": 29,
-    "85": 30,
-    "90": 31,
-    "95": 31,
-    "100": 32
+    "80": 28,
+    "85": 29,
+    "90": 30,
+    "95": 30,
+    "100": 31
   },
   "27": {
     "20": 19,
@@ -257,14 +257,14 @@ const wbgtTable = {
     "50": 23,
     "55": 24,
     "60": 25,
-    "65": 26,
+    "65": 25,
     "70": 26,
     "75": 27,
-    "80": 28,
-    "85": 29,
-    "90": 30,
-    "95": 30,
-    "100": 31
+    "80": 27,
+    "85": 28,
+    "90": 29,
+    "95": 29,
+    "100": 30
   },
   "26": {
     "20": 18,
@@ -276,14 +276,14 @@ const wbgtTable = {
     "50": 22,
     "55": 23,
     "60": 24,
-    "65": 25,
+    "65": 24,
     "70": 25,
     "75": 26,
-    "80": 27,
-    "85": 28,
-    "90": 29,
-    "95": 29,
-    "100": 30
+    "80": 26,
+    "85": 27,
+    "90": 28,
+    "95": 28,
+    "100": 29
   },
   "25": {
     "20": 18,
@@ -293,16 +293,16 @@ const wbgtTable = {
     "40": 20,
     "45": 21,
     "50": 22,
-    "55": 23,
-    "60": 24,
-    "65": 24,
-    "70": 25,
-    "75": 26,
-    "80": 27,
-    "85": 27,
-    "90": 28,
-    "95": 29,
-    "100": 29
+    "55": 22,
+    "60": 23,
+    "65": 23,
+    "70": 24,
+    "75": 25,
+    "80": 25,
+    "85": 26,
+    "90": 27,
+    "95": 27,
+    "100": 28
   },
   "24": {
     "20": 17,
@@ -312,16 +312,16 @@ const wbgtTable = {
     "40": 19,
     "45": 20,
     "50": 21,
-    "55": 22,
-    "60": 23,
-    "65": 23,
-    "70": 24,
-    "75": 25,
-    "80": 26,
-    "85": 26,
-    "90": 27,
-    "95": 28,
-    "100": 28
+    "55": 21,
+    "60": 22,
+    "65": 22,
+    "70": 23,
+    "75": 24,
+    "80": 24,
+    "85": 25,
+    "90": 26,
+    "95": 26,
+    "100": 27
   },
   "23": {
     "20": 16,
@@ -331,16 +331,16 @@ const wbgtTable = {
     "40": 19,
     "45": 19,
     "50": 20,
-    "55": 21,
-    "60": 22,
+    "55": 20,
+    "60": 21,
     "65": 22,
-    "70": 23,
-    "75": 24,
-    "80": 25,
-    "85": 25,
-    "90": 26,
-    "95": 27,
-    "100": 27
+    "70": 22,
+    "75": 23,
+    "80": 23,
+    "85": 24,
+    "90": 25,
+    "95": 25,
+    "100": 26
   },
   "22": {
     "20": 15,
@@ -350,16 +350,16 @@ const wbgtTable = {
     "40": 18,
     "45": 18,
     "50": 19,
-    "55": 20,
-    "60": 21,
+    "55": 19,
+    "60": 20,
     "65": 21,
-    "70": 22,
-    "75": 23,
-    "80": 23,
-    "85": 24,
-    "90": 25,
-    "95": 25,
-    "100": 26
+    "70": 21,
+    "75": 22,
+    "80": 22,
+    "85": 23,
+    "90": 24,
+    "95": 24,
+    "100": 25
   },
   "21": {
     "20": 15,
@@ -370,77 +370,77 @@ const wbgtTable = {
     "45": 17,
     "50": 18,
     "55": 19,
-    "60": 20,
+    "60": 19,
     "65": 20,
-    "70": 21,
-    "75": 22,
-    "80": 22,
-    "85": 23,
-    "90": 24,
-    "95": 24,
+    "70": 20,
+    "75": 21,
+    "80": 21,
+    "85": 22,
+    "90": 23,
+    "95": 23,
     "100": 24
   }
 };
 
 const translations = {
-    "ja": {
-        title: "WBGTチェッカー（手動）",
-        labelTemp: "気温 (℃):",
-        labelHumidity: "湿度 (%):",
-        calculateBtn: "計算",
-        clearBtn: "クリア",
-        themeLabel: "ダークモード",
-        resultText: "WBGT値: "
-    },
-    "pt": {
-        title: "Verificador WBGT (Manual)",
-        labelTemp: "Temperatura (℃):",
-        labelHumidity: "Umidade (%):",
-        calculateBtn: "Calcular",
-        clearBtn: "Limpar",
-        themeLabel: "Modo Escuro",
-        resultText: "Valor WBGT: "
-    },
-    "en": {
-        title: "WBGT Checker (Manual)",
-        labelTemp: "Temperature (℃):",
-        labelHumidity: "Humidity (%):",
-        calculateBtn: "Calculate",
-        clearBtn: "Clear",
-        themeLabel: "Dark Mode",
-        resultText: "WBGT Value: "
-    }
+  "ja": {
+    title: "WBGTチェッカー（手動）",
+    labelTemp: "気温 (℃):",
+    labelHumidity: "湿度 (%):",
+    calculateBtn: "計算",
+    clearBtn: "クリア",
+    themeLabel: "ダークモード",
+    resultText: "WBGT値: "
+  },
+  "pt": {
+    title: "Verificador WBGT (Manual)",
+    labelTemp: "Temperatura (℃):",
+    labelHumidity: "Umidade (%):",
+    calculateBtn: "Calcular",
+    clearBtn: "Limpar",
+    themeLabel: "Modo Escuro",
+    resultText: "Valor WBGT: "
+  },
+  "en": {
+    title: "WBGT Checker (Manual)",
+    labelTemp: "Temperature (℃):",
+    labelHumidity: "Humidity (%):",
+    calculateBtn: "Calculate",
+    clearBtn: "Clear",
+    themeLabel: "Dark Mode",
+    resultText: "WBGT Value: "
+  }
 };
 
 function calculateWBGT() {
-    const temp = document.getElementById("temperature").value;
-    const humidity = document.getElementById("humidity").value;
-    const result = document.getElementById("result");
+  const temp = document.getElementById("temperature").value;
+  const humidity = document.getElementById("humidity").value;
+  const result = document.getElementById("result");
 
-    if (wbgtTable[temp] && wbgtTable[temp][humidity]) {
-        result.textContent = translations[lang].resultText + wbgtTable[temp][humidity];
-    } else {
-        result.textContent = translations[lang].resultText + "N/A";
-    }
+  if (wbgtTable[temp] && wbgtTable[temp][humidity]) {
+    result.textContent = translations[lang].resultText + wbgtTable[temp][humidity];
+  } else {
+    result.textContent = translations[lang].resultText + "N/A";
+  }
 }
 
 function clearFields() {
-    document.getElementById("temperature").value = "";
-    document.getElementById("humidity").value = "";
-    document.getElementById("result").textContent = "";
+  document.getElementById("temperature").value = "";
+  document.getElementById("humidity").value = "";
+  document.getElementById("result").textContent = "";
 }
 
 function toggleTheme() {
-    document.body.classList.toggle("dark-mode");
+  document.body.classList.toggle("dark-mode");
 }
 
 let lang = "ja";
 function changeLanguage() {
-    lang = document.getElementById("language-select").value;
-    document.getElementById("title").textContent = translations[lang].title;
-    document.getElementById("label-temp").textContent = translations[lang].labelTemp;
-    document.getElementById("label-humidity").textContent = translations[lang].labelHumidity;
-    document.getElementById("calculate-btn").textContent = translations[lang].calculateBtn;
-    document.getElementById("clear-btn").textContent = translations[lang].clearBtn;
-    document.getElementById("theme-label").textContent = translations[lang].themeLabel;
+  lang = document.getElementById("language-select").value;
+  document.getElementById("title").textContent = translations[lang].title;
+  document.getElementById("label-temp").textContent = translations[lang].labelTemp;
+  document.getElementById("label-humidity").textContent = translations[lang].labelHumidity;
+  document.getElementById("calculate-btn").textContent = translations[lang].calculateBtn;
+  document.getElementById("clear-btn").textContent = translations[lang].clearBtn;
+  document.getElementById("theme-label").textContent = translations[lang].themeLabel;
 }
