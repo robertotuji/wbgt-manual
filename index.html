@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Verificador WBGT Manual</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">Verificador WBGT (Manual)</h1>
+
+        <label for="temperature" id="label-temp">Temperatura (°C):</label>
+        <input type="number" id="temperature" />
+
+        <label for="humidity" id="label-hum">Umidade (%):</label>
+        <input type="number" id="humidity" />
+
+        <button id="calculate">Calcular</button>
+        <button id="clear">Limpar</button>
+
+        <div id="result-box" class="hidden">
+            <div id="result"></div>
+        </div>
+
+        <select id="language-select">
+            <option value="jp">日本語</option>
+            <option value="pt" selected>Português</option>
+            <option value="en">English</option>
+            <option value="id">Indonesia</option>
+        </select>
+
+        <label class="darkmode-toggle">
+            <input type="checkbox" id="darkmode-toggle" />
+            <span id="darkmode-label">Modo Escuro</span>
+        </label>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
