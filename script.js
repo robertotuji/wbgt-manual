@@ -77,6 +77,7 @@ const resultBox = document.getElementById("result-box");
 const result = document.getElementById("result");
 const errorMessageBox = document.getElementById("error-message-box");
 const errorMessage = document.getElementById("error-message");
+const container = document.querySelector('.container'); // Pega o elemento container
 
 let wbgtData = {};
 
@@ -234,8 +235,7 @@ document.getElementById("calculate").addEventListener("click", () => {
 
     resultBox.classList.remove("hidden");
     resultBox.style.backgroundColor = color;
-    // Lógica para definir a cor do texto (adicionada aqui)
-    if (color === "#538DD5" || color === "#FF0000") { // Cores azul claro (Quase Seguro) e vermelho (Perigo)
+    if (color === "#538DD5" || color === "#FF0000") {
         resultBox.classList.add("dark-bg-text-white");
     } else {
         resultBox.classList.remove("dark-bg-text-white");
@@ -249,6 +249,51 @@ document.getElementById("clear").addEventListener("click", () => {
     resultBox.classList.add("hidden");
     hideError();
 });
+
+// NOVA SEÇÃO: Lógica para tentar corrigir o desalinhamento ao exibir o teclado virtual
+// Isso tenta ajustar a rolagem para manter o campo visível sem mover a página toda
+let originalScrollTop = 0;
+let isKeyboardShowing = false;
+
+// Observa o evento de foco nos inputs
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('focus', () => {
+        // Salva a posição de rolagem atual antes do teclado aparecer
+        originalScrollTop = window.scrollY || document.documentElement.scrollTop;
+        isKeyboardShowing = true;
+        // console.log("Keyboard focus - originalScrollTop:", originalScrollTop);
+
+        // Pequeno atraso para o teclado ter tempo de aparecer
+        setTimeout(() => {
+            if (isKeyboardShowing) {
+                // Tenta rolar o campo focado para uma posição visível
+                input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                // console.log("Scrolled into view");
+            }
+        }, 100);
+    });
+
+    input.addEventListener('blur', () => {
+        isKeyboardShowing = false;
+        // Quando o teclado esconde, pode tentar restaurar a rolagem original
+        // ou deixar o navegador lidar com isso.
+        // window.scrollTo({ top: originalScrollTop, behavior: 'smooth' });
+        // console.log("Keyboard blur");
+    });
+});
+
+// Ouve mudanças no redimensionamento da janela (pode ser o teclado aparecendo/desaparecendo)
+window.addEventListener('resize', () => {
+    // Se o teclado estiver mostrando, tentar manter o campo focado visível
+    if (isKeyboardShowing) {
+        const activeElement = document.activeElement;
+        if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'SELECT')) {
+            activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // console.log("Resized, re-scrolling to active element");
+        }
+    }
+});
+
 
 document.addEventListener("DOMContentLoaded", () => {
     updateLanguage(document.getElementById("language").value);
