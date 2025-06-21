@@ -1,0 +1,77 @@
+
+body {
+  font-family: sans-serif;
+  background-color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 400px;
+  margin: 40px auto;
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#calculate {
+  background-color: #00aaff;
+}
+
+#clear {
+  background-color: #0077cc;
+}
+
+#result {
+  text-align: center;
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.toggle input {
+  margin-right: 10px;
+}
