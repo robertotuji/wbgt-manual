@@ -1,3 +1,10 @@
+html, body {
+    height: 100vh; /* Garante que HTML e Body ocupem 100% da altura da viewport */
+    overflow: hidden; /* Impede a rolagem, o que pode evitar o desalinhamento */
+    margin: 0;
+    padding: 0;
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -5,8 +12,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    /* Remover 'height: 100vh;' daqui pois já está no html,body acima */
+    /* Remover 'margin: 0;' daqui pois já está no html,body acima */
 }
 
 .container {
@@ -16,6 +23,12 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
+    /* Adicionar um max-height e overflow para o container se ele for muito grande
+       e precisar de rolagem interna, mas o ideal é que ele se ajuste.
+       Se ele for maior que a tela, ainda haverá um problema. */
+    max-height: 95vh; /* Limita a altura máxima para que ele não tente rolar muito */
+    overflow-y: auto; /* Permite rolagem INTERNA se o conteúdo for muito grande para a tela */
+    -webkit-overflow-scrolling: touch; /* Melhora a rolagem em iOS */
 }
 
 button {
@@ -42,18 +55,15 @@ button {
     padding: 15px;
     border-radius: 8px;
     font-weight: bold;
-    /* Remover 'color: white;' daqui se existir de alguma tentativa anterior,
-       pois agora a cor será controlada pela classe .dark-bg-text-white */
 }
 
-/* Estilos para a nova caixa de mensagem de erro */
 .error-box {
     margin-top: 15px;
     padding: 15px;
     border-radius: 8px;
     font-weight: bold;
-    color: white; /* Texto branco */
-    background-color: #dc3545; /* Vermelho para erros */
+    color: white;
+    background-color: #dc3545;
     text-align: center;
 }
 
@@ -78,7 +88,6 @@ input, select {
     color: white;
 }
 
-/* Nova regra para o texto da caixa de resultado em fundos escuros/vibrantes */
 .dark-bg-text-white {
     color: white;
 }
