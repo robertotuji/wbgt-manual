@@ -2,7 +2,7 @@
   "name": "Verificador WBGT Manual",
   "short_name": "WBGT Checker",
   "description": "Aplicativo para verificar o WBGT (Wet-Bulb Globe Temperature) manualmente e em tempo real.",
-  "start_url": "/wbgt-manual/index.html",
+  "start_url": "/wbgt-manual/",  // ALTEARADO: De index.html para a raiz do subdiretório
   "display": "standalone",
   "background_color": "#f4f4f4",
   "theme_color": "#00aaff",
