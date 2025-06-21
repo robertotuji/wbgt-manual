@@ -1,0 +1,91 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 400px;
+  margin: 40px auto;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin: 10px 0 5px;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 10px;
+  background-color: #00aaff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #008ecc;
+}
+
+#result-box {
+  display: none;
+  padding: 15px;
+  border-radius: 15px;
+  margin-top: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+}
+
+.result-black-text {
+  color: black !important;
+}
+
+.dark-mode {
+  background-color: #2c2c2c;
+  color: white;
+}
+
+.dark-mode .container {
+  background-color: #333;
+}
+
+.dark-mode input, 
+.dark-mode select {
+  background-color: #555;
+  color: white;
+  border: 1px solid #777;
+}
+
+.dark-mode button {
+  background-color: #0077aa;
+}
+
+.dark-mode button:hover {
+  background-color: #005577;
+}
