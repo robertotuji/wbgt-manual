@@ -7,8 +7,8 @@ const translations = {
         clear: "クリア",
         dark: "ダークモード",
         invalidInput: "有効な温度と湿度を入力してください。",
-        tempOutOfRange: "A temperatura deve estar entre 21°C e 40°C, pois fora desses limites não há valores registrados na tabela WBGT.",
-        humOutOfRange: "A umidade relativa deve estar entre 20% e 100%, pois fora desses limites não há valores registrados na tabela WBGT.",
+        tempOutOfRange: "温度は21°Cから40°Cの間である必要があります。この範囲外にはWBGTテーブルに値が記録されていません。",
+        humOutOfRange: "相対湿度は20%から100%の間で、5刻みである必要があります。この範囲外にはWBGTテーブルに値が記録されていません。",
         levels: [
             "ほぼ安全",
             "注意",
@@ -75,6 +75,8 @@ const translations = {
 
 const resultBox = document.getElementById("result-box");
 const result = document.getElementById("result");
+const errorMessageBox = document.getElementById("error-message-box"); // NOVO: Elemento para caixa de erro
+const errorMessage = document.getElementById("error-message"); // NOVO: Elemento para texto de erro
 
 let wbgtData = {};
 
@@ -94,19 +96,34 @@ async function loadWbgtData() {
 
 loadWbgtData();
 
+// NOVA FUNÇÃO para exibir mensagens de erro personalizadas
+function displayError(message) {
+    resultBox.classList.add("hidden"); // Esconde a caixa de resultado se houver erro
+    errorMessageBox.classList.remove("hidden");
+    errorMessage.innerHTML = message;
+}
+
+// NOVA FUNÇÃO para esconder mensagens de erro
+function hideError() {
+    errorMessageBox.classList.add("hidden");
+    errorMessage.innerHTML = "";
+}
+
+
 function calculateWBGT(temp, hum) {
     if (Object.keys(wbgtData).length === 0) {
-        console.error("Dados WBGT não carregados.");
+        displayError(translations[document.getElementById("language").value].invalidInput); // Usa a nova função
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
     // VALIDAÇÃO DE LIMITES DE ENTRADA
     if (temp < 21 || temp > 40) {
-        alert(translations[document.getElementById("language").value].tempOutOfRange);
+        displayError(translations[document.getElementById("language").value].tempOutOfRange); // Usa a nova função
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
-    if (hum < 20 || hum > 100 || hum % 5 !== 0) { // Verifica também o intervalo de 5 em 5 para umidade
-        alert(translations[document.getElementById("language").value].humOutOfRange);
+    // Verifica também o intervalo de 5 em 5 para umidade
+    if (hum < 20 || hum > 100 || hum % 5 !== 0) {
+        displayError(translations[document.getElementById("language").value].humOutOfRange); // Usa a nova função
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
@@ -121,44 +138,36 @@ function calculateWBGT(temp, hum) {
     if (wbgtData[tempKey] && wbgtData[tempKey][humKey]) {
         wbgtValue = wbgtData[tempKey][humKey];
     } else {
-        // A lógica de "closestTemp" e "closestHum" ainda é usada caso os inputs do usuário
-        // não correspondam exatamente a uma chave, mas estejam dentro dos limites válidos.
         const availableTemps = Object.keys(wbgtData).map(Number).sort((a, b) => a - b);
         let closestTemp = availableTemps.reduce((prev, curr) => (
             Math.abs(curr - temp) < Math.abs(prev - temp) ? curr : prev
         ));
-        closestTemp = Math.min(Math.max(closestTemp, 21), 40); // Garante que fique dentro dos limites da tabela
+        closestTemp = Math.min(Math.max(closestTemp, 21), 40);
 
         if (wbgtData[String(closestTemp)]) {
             const availableHums = Object.keys(wbgtData[String(closestTemp)]).map(Number).sort((a, b) => a - b);
             let closestHum = availableHums.reduce((prev, curr) => (
                 Math.abs(curr - hum) < Math.abs(prev - hum) ? curr : prev
             ));
-            closestHum = Math.min(Math.max(closestHum, 20), 100); // Garante que fique dentro dos limites da tabela
+            closestHum = Math.min(Math.max(closestHum, 20), 100);
 
-            // Verifica se o valor mais próximo está dentro da faixa de 5 em 5 para umidade
-            if (closestHum % 5 !== 0) {
-                // Se o mais próximo não for múltiplo de 5, tentamos o próximo múltiplo de 5.
-                // Isso é um pouco mais avançado e pode ser simplificado para apenas arredondar se preferir.
-                // Por enquanto, a validação acima já barra entradas que não são de 5 em 5.
-                // Esta parte aqui garante que a busca na tabela use chaves válidas de 5 em 5.
-                closestHum = Math.round(closestHum / 5) * 5;
-                closestHum = Math.min(Math.max(closestHum, 20), 100); // Re-limita após arredondamento
-            }
-
+            // Garante que o closestHum seja um múltiplo de 5, já que a tabela só tem de 5 em 5.
+            closestHum = Math.round(closestHum / 5) * 5;
+            closestHum = Math.min(Math.max(closestHum, 20), 100); // Re-limita após arredondamento
 
             if (wbgtData[String(closestTemp)][String(closestHum)]) {
                  wbgtValue = wbgtData[String(closestTemp)][String(closestHum)];
                  console.warn(`WBGT: Usando valores aproximados - Temp: ${closestTemp}°C, Hum: ${closestHum}% para Temp: ${temp}°C, Hum: ${hum}%`);
             } else {
                  console.error(`Não foi possível encontrar WBGT para temp ${temp} e hum ${hum} mesmo com aproximação.`);
+                 displayError(translations[document.getElementById("language").value].invalidInput);
                  return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
             }
         }
     }
 
     if (wbgtValue === null) {
-        console.error("WBGT não encontrado para os valores fornecidos ou aproximados na tabela.");
+        displayError(translations[document.getElementById("language").value].invalidInput);
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
@@ -174,22 +183,22 @@ function calculateWBGT(temp, hum) {
         color = "#FF0000";
     }
     // 28～30 WBGT → Alerta Máximo (#FFC000)
-    else if (wbgtValue >= 28) { // Já sabemos que não é >= 31, então se for >= 28, será 28, 29 ou 30.
+    else if (wbgtValue >= 28) {
         levelIdx = 3; // Alerta Máximo
         color = "#FFC000";
     }
     // 25～27 WBGT → Alerta (#FFFF00)
-    else if (wbgtValue >= 25) { // Já sabemos que não é >= 28, então se for >= 25, será 25, 26 ou 27.
+    else if (wbgtValue >= 25) {
         levelIdx = 2; // Alerta
         color = "#FFFF00";
     }
     // 21～24 WBGT → Atenção (#C5D9F1)
-    else if (wbgtValue >= 21) { // Já sabemos que não é >= 25, então se for >= 21, será 21, 22, 23 ou 24.
+    else if (wbgtValue >= 21) {
         levelIdx = 1; // Atenção
         color = "#C5D9F1";
     }
     // Abaixo de 21 WBGT → Quase Seguro (#538DD5)
-    else { // Se nenhuma das condições acima for verdadeira, significa que wbgtValue é menor que 21.
+    else {
         levelIdx = 0; // Quase Seguro
         color = "#538DD5";
     }
@@ -205,6 +214,7 @@ function updateLanguage(lang) {
     document.getElementById("calculate").textContent = t.calculate;
     document.getElementById("clear").textContent = t.clear;
     document.getElementById("dark-label").textContent = t.dark;
+    hideError(); // Esconde qualquer erro ao mudar o idioma
 }
 
 document.getElementById("language").addEventListener("change", (e) => {
@@ -216,22 +226,22 @@ document.getElementById("dark-mode").addEventListener("change", () => {
 });
 
 document.getElementById("calculate").addEventListener("click", () => {
+    hideError(); // Esconde erros anteriores ao tentar calcular
     const temp = parseFloat(document.getElementById("temperature").value);
     const hum = parseFloat(document.getElementById("humidity").value);
     const lang = document.getElementById("language").value;
 
     if (isNaN(temp) || isNaN(hum)) {
-        alert(translations[lang].invalidInput);
+        displayError(translations[lang].invalidInput);
         return;
     }
 
     const { wbgt, levelIdx, color } = calculateWBGT(temp, hum);
 
-    // Se o wbgt for null, significa que a validação barrou a entrada
     if (wbgt === null) {
-        // Não mostrar a resultBox nem mudar a cor se a entrada foi inválida
-        resultBox.classList.add("hidden"); // Esconde a caixa de resultado
-        return; // Sai da função
+        // A função calculateWBGT já chamará displayError se wbgt for null
+        resultBox.classList.add("hidden"); // Garante que a caixa de resultado esteja oculta
+        return;
     }
 
     const label = translations[lang].levels[levelIdx];
@@ -245,6 +255,7 @@ document.getElementById("clear").addEventListener("click", () => {
     document.getElementById("temperature").value = "";
     document.getElementById("humidity").value = "";
     resultBox.classList.add("hidden");
+    hideError(); // NOVO: Esconde a caixa de erro ao limpar
 });
 
 document.addEventListener("DOMContentLoaded", () => {
