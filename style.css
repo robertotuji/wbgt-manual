@@ -1,0 +1,41 @@
+
+.result-box {
+    margin-top: 20px;
+    padding: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 12px;
+    font-size: 18px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Faixas de cor do fundo */
+.safe {
+    background-color: #538DD5;
+}
+
+.caution {
+    background-color: #C5D9F1;
+}
+
+.warning {
+    background-color: #FFFF00;
+}
+
+.alert {
+    background-color: #FFC000;
+}
+
+.danger {
+    background-color: #FF0000;
+}
+
+/* Texto preto para WBGT 21~30 */
+.black-text {
+    color: #000000;
+}
+
+/* Texto branco para WBGT <21 e >30 */
+.white-text {
+    color: #FFFFFF;
+}
