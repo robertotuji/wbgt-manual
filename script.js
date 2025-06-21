@@ -7,8 +7,8 @@ const translations = {
         clear: "クリア",
         dark: "ダークモード",
         invalidInput: "有効な温度と湿度を入力してください。",
-        tempOutOfRange: "WBGTテーブルに値が記録されていないため、温度は21°Cから40°Cの間である必要があります。", // CORRIGIDO: Tradução em japonês
-        humOutOfRange: "WBGTテーブルに値が記録されていないため、相対湿度は20%から100%の間で、5刻みである必要があります。", // CORRIGIDO: Tradução em japonês
+        tempOutOfRange: "WBGTテーブルに値が記録されていないため、温度は21°Cから40°Cの間である必要があります。",
+        humOutOfRange: "WBGTテーブルに値が記録されていないため、相対湿度は20%から100%の間で、5刻みである必要があります。",
         levels: [
             "ほぼ安全",
             "注意",
@@ -61,8 +61,8 @@ const translations = {
         clear: "Bersihkan",
         dark: "Mode Gelap",
         invalidInput: "Mohon masukkan nilai Suhu dan Kelembaban yang valid.",
-        tempOutOfRange: "Suhu harus antara 21°C dan 40°C, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.", // CORRIGIDO: Tradução em indonésio
-        humOutOfRange: "Kelembaban relatif harus antara 20% dan 100%, dengan interval 5, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.", // CORRIGIDO: Tradução em indonésio
+        tempOutOfRange: "Suhu harus antara 21°C dan 40°C, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.",
+        humOutOfRange: "Kelembaban relatif harus antara 20% dan 100%, dengan interval 5, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.",
         levels: [
             "Hampir Aman",
             "Waspada",
@@ -90,7 +90,6 @@ async function loadWbgtData() {
         console.log("Dados WBGT carregados com sucesso!");
     } catch (error) {
         console.error("Erro ao carregar os dados WBGT:", error);
-        // Mantém o alert original para erros de carregamento da tabela, que são mais graves.
         alert("Erro ao carregar a tabela de WBGT. Por favor, tente novamente mais tarde.");
     }
 }
@@ -108,18 +107,29 @@ function hideError() {
     errorMessage.innerHTML = "";
 }
 
+function updateResultDisplay(wbgtValue, levelIdx, color, lang) {
+    const label = translations[(lang || document.getElementById("language").value)].levels[(levelIdx >= 0 ? levelIdx : 0)];
+    resultBox.classList.remove("hidden");
+    resultBox.style.backgroundColor = color;
+    result.textContent = `WBGT: <span class="math-inline">\{wbgtValue\}°C\\n</span>{label}`;
+    result.className = ''; // Remove classes anteriores
+    if (levelIdx === 0 || levelIdx === 4) {
+        result.classList.add('white-text');
+    }
+}
+
 function calculateWBGT(temp, hum) {
     if (Object.keys(wbgtData).length === 0) {
-        displayError(translations[document.getElementById("language").value].invalidInput);
+        displayError(translations[(document.getElementById("language").value)].invalidInput);
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
     if (temp < 21 || temp > 40) {
-        displayError(translations[document.getElementById("language").value].tempOutOfRange);
+        displayError(translations[(document.getElementById("language").value)].tempOutOfRange);
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
     if (hum < 20 || hum > 100 || hum % 5 !== 0) {
-        displayError(translations[document.getElementById("language").value].humOutOfRange);
+        displayError(translations[(document.getElementById("language").value)].humOutOfRange);
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
@@ -131,8 +141,8 @@ function calculateWBGT(temp, hum) {
 
     let wbgtValue = null;
 
-    if (wbgtData[tempKey] && wbgtData[tempKey][humKey]) {
-        wbgtValue = wbgtData[tempKey][humKey];
+    if (wbgtData && wbgtData.hasOwnProperty(tempKey) && wbgtData.hasOwnProperty(tempKey) && wbgtData?.[tempKey]?.hasOwnProperty(humKey)) {
+        wbgtValue = wbgtData?.[tempKey]?.[humKey];
     } else {
         const availableTemps = Object.keys(wbgtData).map(Number).sort((a, b) => a - b);
         let closestTemp = availableTemps.reduce((prev, curr) => (
@@ -140,29 +150,28 @@ function calculateWBGT(temp, hum) {
         ));
         closestTemp = Math.min(Math.max(closestTemp, 21), 40);
 
-        if (wbgtData[String(closestTemp)]) {
-            const availableHums = Object.keys(wbgtData[String(closestTemp)]).map(Number).sort((a, b) => a - b);
+        if (wbgtData && wbgtData.hasOwnProperty(String(closestTemp))) {
+            const availableHums = Object.keys(wbgtData?.[String(closestTemp)]).map(Number).sort((a, b) => a - b);
             let closestHum = availableHums.reduce((prev, curr) => (
                 Math.abs(curr - hum) < Math.abs(prev - hum) ? curr : prev
             ));
             closestHum = Math.min(Math.max(closestHum, 20), 100);
-
             closestHum = Math.round(closestHum / 5) * 5;
             closestHum = Math.min(Math.max(closestHum, 20), 100);
 
-            if (wbgtData[String(closestTemp)][String(closestHum)]) {
-                 wbgtValue = wbgtData[String(closestTemp)][String(closestHum)];
+            if (wbgtData?.[String(closestTemp)]?.[String(closestHum)]) {
+                 wbgtValue = wbgtData?.[String(closestTemp)]?.[String(closestHum)];
                  console.warn(`WBGT: Usando valores aproximados - Temp: ${closestTemp}°C, Hum: ${closestHum}% para Temp: ${temp}°C, Hum: ${hum}%`);
             } else {
                  console.error(`Não foi possível encontrar WBGT para temp ${temp} e hum ${hum} mesmo com aproximação.`);
-                 displayError(translations[document.getElementById("language").value].invalidInput);
+                 displayError(translations[(document.getElementById("language").value)].invalidInput);
                  return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
             }
         }
     }
 
     if (wbgtValue === null) {
-        displayError(translations[document.getElementById("language").value].invalidInput);
+        displayError(translations[(document.getElementById("language").value)].invalidInput);
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
@@ -173,77 +182,4 @@ function calculateWBGT(temp, hum) {
         levelIdx = 4;
         color = "#FF0000";
     }
-    else if (wbgtValue >= 28) {
-        levelIdx = 3;
-        color = "#FFC000";
-    }
-    else if (wbgtValue >= 25) {
-        levelIdx = 2;
-        color = "#FFFF00";
-    }
-    else if (wbgtValue >= 21) {
-        levelIdx = 1;
-        color = "#C5D9F1";
-    }
-    else {
-        levelIdx = 0;
-        color = "#538DD5";
-    }
-
-    return { wbgt: wbgtValue, levelIdx: levelIdx, color: color };
-}
-
-function updateLanguage(lang) {
-    const t = translations[lang];
-    document.getElementById("title").textContent = t.title;
-    document.getElementById("label-temp").textContent = t.temperature;
-    document.getElementById("label-humidity").textContent = t.humidity;
-    document.getElementById("calculate").textContent = t.calculate;
-    document.getElementById("clear").textContent = t.clear;
-    document.getElementById("dark-label").textContent = t.dark;
-    hideError();
-}
-
-document.getElementById("language").addEventListener("change", (e) => {
-    updateLanguage(e.target.value);
-});
-
-document.getElementById("dark-mode").addEventListener("change", () => {
-    document.body.classList.toggle("dark-mode");
-});
-
-document.getElementById("calculate").addEventListener("click", () => {
-    hideError();
-    const temp = parseFloat(document.getElementById("temperature").value);
-    const hum = parseFloat(document.getElementById("humidity").value);
-    const lang = document.getElementById("language").value;
-
-    if (isNaN(temp) || isNaN(hum)) {
-        displayError(translations[lang].invalidInput);
-        return;
-    }
-
-    const { wbgt, levelIdx, color } = calculateWBGT(temp, hum);
-
-    if (wbgt === null) {
-        resultBox.classList.add("hidden");
-        return;
-    }
-
-    const label = translations[lang].levels[levelIdx];
-
-    resultBox.classList.remove("hidden");
-    resultBox.style.backgroundColor = color;
-    result.innerHTML = `WBGT: ${wbgt}°C<br><strong>${label}</strong>`;
-});
-
-document.getElementById("clear").addEventListener("click", () => {
-    document.getElementById("temperature").value = "";
-    document.getElementById("humidity").value = "";
-    resultBox.classList.add("hidden");
-    hideError();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-    updateLanguage(document.getElementById("language").value);
-});
+    else if (wbgt
