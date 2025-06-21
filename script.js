@@ -129,31 +129,31 @@ function calculateWBGT(temp, hum) {
     let levelIdx;
     let color;
 
-    // A ORDEM DESTAS CONDIÇÕES É CRÍTICA E FOI AJUSTADA PARA A SUA ESPECIFICAÇÃO EXATA.
-    // Começamos pelas faixas mais altas/críticas ou mais específicas para evitar sobreposição.
+    // DEFINIÇÃO FINAL DAS FAIXAS DE WBGT, TESTADAS PARA COBRIR TODOS OS CASOS.
+    // A ordem é do maior para o menor para garantir que as condições mais "altas" sejam verificadas primeiro.
 
     // 31 WBGT e acima → Perigo (#FF0000)
     if (wbgtValue >= 31) {
         levelIdx = 4; // Perigo
         color = "#FF0000";
     }
-    // 28～30 WBGT → 厳重警戒 (Alerta Máximo) (#FFC000)
-    else if (wbgtValue >= 28) { // Se for 28, 29 ou 30, cairá aqui. O limite superior de 30 é implícito pela próxima condição.
+    // 28～30 WBGT → Alerta Máximo (#FFC000)
+    else if (wbgtValue >= 28) { // Já sabemos que não é >= 31, então se for >= 28, será 28, 29 ou 30.
         levelIdx = 3; // Alerta Máximo
         color = "#FFC000";
     }
-    // 25～27 WBGT → 警戒 (Alerta) (#FFFF00)
-    else if (wbgtValue >= 25) { // Se for 25, 26 ou 27, cairá aqui. O limite superior de 27 é implícito pela próxima condição.
+    // 25～27 WBGT → Alerta (#FFFF00)
+    else if (wbgtValue >= 25) { // Já sabemos que não é >= 28, então se for >= 25, será 25, 26 ou 27.
         levelIdx = 2; // Alerta
         color = "#FFFF00";
     }
-    // 21～24 WBGT → 注意 (Atenção) (#C5D9F1)
-    else if (wbgtValue >= 21) { // Se for 21, 22, 23 ou 24, cairá aqui. O limite superior de 24 é implícito pela próxima condição.
+    // 21～24 WBGT → Atenção (#C5D9F1)
+    else if (wbgtValue >= 21) { // Já sabemos que não é >= 25, então se for >= 21, será 21, 22, 23 ou 24.
         levelIdx = 1; // Atenção
         color = "#C5D9F1";
     }
-    // Abaixo de 21 WBGT → ほぼ安全 (Quase Seguro) (#538DD5)
-    else { // Se o WBGT for menor que 21
+    // Abaixo de 21 WBGT → Quase Seguro (#538DD5)
+    else { // Se nenhuma das condições acima for verdadeira, significa que wbgtValue é menor que 21.
         levelIdx = 0; // Quase Seguro
         color = "#538DD5";
     }
