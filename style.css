@@ -44,6 +44,18 @@ button {
     font-weight: bold;
 }
 
+/* Estilos para a nova caixa de mensagem de erro */
+.error-box {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: white; /* Texto branco */
+    background-color: #dc3545; /* Vermelho para erros */
+    text-align: center;
+}
+
+
 .hidden {
     display: none;
 }
@@ -65,13 +77,12 @@ input, select {
     color: white;
 }
 
-/* Container para o switch e a label "Modo Escuro" */
 .switch-container {
     display: flex;
     align-items: center;
-    justify-content: center; /* Centraliza horizontalmente */
-    margin-top: 20px; /* Adiciona um pouco de espaço acima */
-    gap: 10px; /* Espaçamento entre a label e o switch */
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
 }
 
 .switch {
