@@ -7,6 +7,8 @@ const translations = {
         clear: "クリア",
         dark: "ダークモード",
         invalidInput: "有効な温度と湿度を入力してください。",
+        tempOutOfRange: "A temperatura deve estar entre 21°C e 40°C, pois fora desses limites não há valores registrados na tabela WBGT.",
+        humOutOfRange: "A umidade relativa deve estar entre 20% e 100%, pois fora desses limites não há valores registrados na tabela WBGT.",
         levels: [
             "ほぼ安全",
             "注意",
@@ -23,6 +25,8 @@ const translations = {
         clear: "Limpar",
         dark: "Modo Escuro",
         invalidInput: "Por favor, insira valores válidos para Temperatura e Umidade.",
+        tempOutOfRange: "A temperatura deve estar entre 21°C e 40°C, pois fora desses limites não há valores registrados na tabela WBGT.",
+        humOutOfRange: "A umidade relativa deve estar entre 20% e 100%, com intervalos de 5 em 5, pois fora desses limites não há valores registrados na tabela WBGT.",
         levels: [
             "Quase Seguro",
             "Atenção",
@@ -39,6 +43,8 @@ const translations = {
         clear: "Clear",
         dark: "Dark Mode",
         invalidInput: "Please enter valid Temperature and Humidity values.",
+        tempOutOfRange: "Temperature must be between 21°C and 40°C, as there are no recorded values outside these limits in the WBGT table.",
+        humOutOfRange: "Relative humidity must be between 20% and 100%, with intervals of 5, as there are no recorded values outside these limits in the WBGT table.",
         levels: [
             "Almost Safe",
             "Caution",
@@ -55,6 +61,8 @@ const translations = {
         clear: "Bersihkan",
         dark: "Mode Gelap",
         invalidInput: "Mohon masukkan nilai Suhu dan Kelembaban yang valid.",
+        tempOutOfRange: "Suhu harus antara 21°C dan 40°C, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.",
+        humOutOfRange: "Kelembaban relatif harus antara 20% dan 100%, dengan interval 5, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.",
         levels: [
             "Hampir Aman",
             "Waspada",
@@ -92,6 +100,16 @@ function calculateWBGT(temp, hum) {
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
+    // VALIDAÇÃO DE LIMITES DE ENTRADA
+    if (temp < 21 || temp > 40) {
+        alert(translations[document.getElementById("language").value].tempOutOfRange);
+        return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
+    }
+    if (hum < 20 || hum > 100 || hum % 5 !== 0) { // Verifica também o intervalo de 5 em 5 para umidade
+        alert(translations[document.getElementById("language").value].humOutOfRange);
+        return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
+    }
+
     const roundedTemp = Math.round(temp);
     const roundedHum = Math.round(hum);
 
@@ -103,21 +121,39 @@ function calculateWBGT(temp, hum) {
     if (wbgtData[tempKey] && wbgtData[tempKey][humKey]) {
         wbgtValue = wbgtData[tempKey][humKey];
     } else {
+        // A lógica de "closestTemp" e "closestHum" ainda é usada caso os inputs do usuário
+        // não correspondam exatamente a uma chave, mas estejam dentro dos limites válidos.
         const availableTemps = Object.keys(wbgtData).map(Number).sort((a, b) => a - b);
         let closestTemp = availableTemps.reduce((prev, curr) => (
             Math.abs(curr - temp) < Math.abs(prev - temp) ? curr : prev
         ));
-        closestTemp = Math.min(Math.max(closestTemp, 21), 40);
+        closestTemp = Math.min(Math.max(closestTemp, 21), 40); // Garante que fique dentro dos limites da tabela
 
         if (wbgtData[String(closestTemp)]) {
             const availableHums = Object.keys(wbgtData[String(closestTemp)]).map(Number).sort((a, b) => a - b);
             let closestHum = availableHums.reduce((prev, curr) => (
                 Math.abs(curr - hum) < Math.abs(prev - hum) ? curr : prev
             ));
-            closestHum = Math.min(Math.max(closestHum, 20), 100);
+            closestHum = Math.min(Math.max(closestHum, 20), 100); // Garante que fique dentro dos limites da tabela
 
-            wbgtValue = wbgtData[String(closestTemp)][String(closestHum)];
-            console.warn(`WBGT: Usando valores aproximados - Temp: ${closestTemp}°C, Hum: ${closestHum}% para Temp: ${temp}°C, Hum: ${hum}%`);
+            // Verifica se o valor mais próximo está dentro da faixa de 5 em 5 para umidade
+            if (closestHum % 5 !== 0) {
+                // Se o mais próximo não for múltiplo de 5, tentamos o próximo múltiplo de 5.
+                // Isso é um pouco mais avançado e pode ser simplificado para apenas arredondar se preferir.
+                // Por enquanto, a validação acima já barra entradas que não são de 5 em 5.
+                // Esta parte aqui garante que a busca na tabela use chaves válidas de 5 em 5.
+                closestHum = Math.round(closestHum / 5) * 5;
+                closestHum = Math.min(Math.max(closestHum, 20), 100); // Re-limita após arredondamento
+            }
+
+
+            if (wbgtData[String(closestTemp)][String(closestHum)]) {
+                 wbgtValue = wbgtData[String(closestTemp)][String(closestHum)];
+                 console.warn(`WBGT: Usando valores aproximados - Temp: ${closestTemp}°C, Hum: ${closestHum}% para Temp: ${temp}°C, Hum: ${hum}%`);
+            } else {
+                 console.error(`Não foi possível encontrar WBGT para temp ${temp} e hum ${hum} mesmo com aproximação.`);
+                 return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
+            }
         }
     }
 
@@ -191,11 +227,11 @@ document.getElementById("calculate").addEventListener("click", () => {
 
     const { wbgt, levelIdx, color } = calculateWBGT(temp, hum);
 
+    // Se o wbgt for null, significa que a validação barrou a entrada
     if (wbgt === null) {
-        resultBox.classList.remove("hidden");
-        resultBox.style.backgroundColor = "#CCCCCC";
-        result.innerHTML = `WBGT: N/A<br><strong>${translations[lang].invalidInput}</strong>`;
-        return;
+        // Não mostrar a resultBox nem mudar a cor se a entrada foi inválida
+        resultBox.classList.add("hidden"); // Esconde a caixa de resultado
+        return; // Sai da função
     }
 
     const label = translations[lang].levels[levelIdx];
