@@ -1,0 +1,482 @@
+const alertLabels = {"jp": ["ほぼ安全", "注意", "警戒", "厳重警戒", "危険"], "pt": ["Quase Seguro", "Atenção", "Alerta", "Alerta Máximo", "Perigo"], "en": ["Almost Safe", "Caution", "Alert", "High Alert", "Danger"], "id": ["Hampir Aman", "Waspada", "Siaga", "Siaga Ekstrem", "Bahaya"]};
+
+
+const wbgtTable = {
+  "40": {
+    "20": 29,
+    "25": 30,
+    "30": 31,
+    "35": 32,
+    "40": 33,
+    "45": 34,
+    "50": 35,
+    "55": 35,
+    "60": 36,
+    "65": 37,
+    "70": 38,
+    "75": 39,
+    "80": 40,
+    "85": 41,
+    "90": 42,
+    "95": 43,
+    "100": 44
+  },
+  "39": {
+    "20": 28,
+    "25": 29,
+    "30": 30,
+    "35": 31,
+    "40": 32,
+    "45": 33,
+    "50": 34,
+    "55": 35,
+    "60": 35,
+    "65": 36,
+    "70": 37,
+    "75": 38,
+    "80": 39,
+    "85": 40,
+    "90": 41,
+    "95": 42,
+    "100": 43
+  },
+  "38": {
+    "20": 28,
+    "25": 28,
+    "30": 29,
+    "35": 30,
+    "40": 31,
+    "45": 32,
+    "50": 33,
+    "55": 34,
+    "60": 35,
+    "65": 35,
+    "70": 36,
+    "75": 37,
+    "80": 38,
+    "85": 39,
+    "90": 40,
+    "95": 41,
+    "100": 42
+  },
+  "37": {
+    "20": 27,
+    "25": 28,
+    "30": 29,
+    "35": 29,
+    "40": 30,
+    "45": 31,
+    "50": 32,
+    "55": 33,
+    "60": 35,
+    "65": 35,
+    "70": 35,
+    "75": 36,
+    "80": 37,
+    "85": 38,
+    "90": 39,
+    "95": 40,
+    "100": 41
+  },
+  "36": {
+    "20": 26,
+    "25": 27,
+    "30": 28,
+    "35": 29,
+    "40": 29,
+    "45": 30,
+    "50": 31,
+    "55": 32,
+    "60": 33,
+    "65": 34,
+    "70": 34,
+    "75": 35,
+    "80": 36,
+    "85": 37,
+    "90": 38,
+    "95": 39,
+    "100": 39
+  },
+  "35": {
+    "20": 25,
+    "25": 26,
+    "30": 27,
+    "35": 28,
+    "40": 29,
+    "45": 29,
+    "50": 30,
+    "55": 31,
+    "60": 32,
+    "65": 33,
+    "70": 33,
+    "75": 34,
+    "80": 35,
+    "85": 36,
+    "90": 37,
+    "95": 38,
+    "100": 38
+  },
+  "34": {
+    "20": 25,
+    "25": 25,
+    "30": 26,
+    "35": 27,
+    "40": 28,
+    "45": 29,
+    "50": 29,
+    "55": 30,
+    "60": 31,
+    "65": 32,
+    "70": 33,
+    "75": 33,
+    "80": 34,
+    "85": 35,
+    "90": 36,
+    "95": 37,
+    "100": 37
+  },
+  "33": {
+    "20": 24,
+    "25": 25,
+    "30": 25,
+    "35": 26,
+    "40": 27,
+    "45": 28,
+    "50": 28,
+    "55": 29,
+    "60": 30,
+    "65": 31,
+    "70": 32,
+    "75": 32,
+    "80": 33,
+    "85": 34,
+    "90": 35,
+    "95": 35,
+    "100": 36
+  },
+  "32": {
+    "20": 23,
+    "25": 24,
+    "30": 25,
+    "35": 25,
+    "40": 26,
+    "45": 27,
+    "50": 28,
+    "55": 28,
+    "60": 29,
+    "65": 30,
+    "70": 31,
+    "75": 31,
+    "80": 32,
+    "85": 33,
+    "90": 34,
+    "95": 34,
+    "100": 35
+  },
+  "31": {
+    "20": 22,
+    "25": 23,
+    "30": 24,
+    "35": 24,
+    "40": 25,
+    "45": 26,
+    "50": 27,
+    "55": 27,
+    "60": 28,
+    "65": 29,
+    "70": 30,
+    "75": 30,
+    "80": 31,
+    "85": 32,
+    "90": 33,
+    "95": 33,
+    "100": 34
+  },
+  "30": {
+    "20": 21,
+    "25": 22,
+    "30": 23,
+    "35": 24,
+    "40": 24,
+    "45": 25,
+    "50": 26,
+    "55": 27,
+    "60": 27,
+    "65": 28,
+    "70": 29,
+    "75": 29,
+    "80": 30,
+    "85": 31,
+    "90": 32,
+    "95": 32,
+    "100": 33
+  },
+  "29": {
+    "20": 21,
+    "25": 21,
+    "30": 22,
+    "35": 23,
+    "40": 24,
+    "45": 24,
+    "50": 25,
+    "55": 26,
+    "60": 26,
+    "65": 27,
+    "70": 28,
+    "75": 29,
+    "80": 29,
+    "85": 30,
+    "90": 31,
+    "95": 31,
+    "100": 32
+  },
+  "28": {
+    "20": 20,
+    "25": 21,
+    "30": 21,
+    "35": 22,
+    "40": 23,
+    "45": 23,
+    "50": 24,
+    "55": 25,
+    "60": 25,
+    "65": 26,
+    "70": 27,
+    "75": 28,
+    "80": 28,
+    "85": 29,
+    "90": 30,
+    "95": 30,
+    "100": 31
+  },
+  "27": {
+    "20": 19,
+    "25": 20,
+    "30": 21,
+    "35": 21,
+    "40": 22,
+    "45": 23,
+    "50": 23,
+    "55": 24,
+    "60": 25,
+    "65": 25,
+    "70": 26,
+    "75": 27,
+    "80": 27,
+    "85": 28,
+    "90": 29,
+    "95": 29,
+    "100": 30
+  },
+  "26": {
+    "20": 18,
+    "25": 19,
+    "30": 20,
+    "35": 20,
+    "40": 21,
+    "45": 22,
+    "50": 22,
+    "55": 23,
+    "60": 24,
+    "65": 24,
+    "70": 25,
+    "75": 26,
+    "80": 26,
+    "85": 27,
+    "90": 28,
+    "95": 28,
+    "100": 29
+  },
+  "25": {
+    "20": 18,
+    "25": 18,
+    "30": 19,
+    "35": 20,
+    "40": 20,
+    "45": 21,
+    "50": 22,
+    "55": 22,
+    "60": 23,
+    "65": 23,
+    "70": 24,
+    "75": 25,
+    "80": 25,
+    "85": 26,
+    "90": 27,
+    "95": 27,
+    "100": 28
+  },
+  "24": {
+    "20": 17,
+    "25": 18,
+    "30": 18,
+    "35": 19,
+    "40": 19,
+    "45": 20,
+    "50": 21,
+    "55": 21,
+    "60": 22,
+    "65": 22,
+    "70": 23,
+    "75": 24,
+    "80": 24,
+    "85": 25,
+    "90": 26,
+    "95": 26,
+    "100": 27
+  },
+  "23": {
+    "20": 16,
+    "25": 17,
+    "30": 17,
+    "35": 18,
+    "40": 19,
+    "45": 19,
+    "50": 20,
+    "55": 20,
+    "60": 21,
+    "65": 22,
+    "70": 22,
+    "75": 23,
+    "80": 23,
+    "85": 24,
+    "90": 25,
+    "95": 25,
+    "100": 26
+  },
+  "22": {
+    "20": 15,
+    "25": 16,
+    "30": 17,
+    "35": 17,
+    "40": 18,
+    "45": 18,
+    "50": 19,
+    "55": 19,
+    "60": 20,
+    "65": 21,
+    "70": 21,
+    "75": 22,
+    "80": 22,
+    "85": 23,
+    "90": 24,
+    "95": 24,
+    "100": 25
+  },
+  "21": {
+    "20": 15,
+    "25": 15,
+    "30": 16,
+    "35": 16,
+    "40": 17,
+    "45": 17,
+    "50": 18,
+    "55": 19,
+    "60": 19,
+    "65": 20,
+    "70": 20,
+    "75": 21,
+    "80": 21,
+    "85": 22,
+    "90": 23,
+    "95": 23,
+    "100": 24
+  }
+};
+
+const translations = {
+  "ja": {
+    title: "WBGTチェッカー（手動）",
+    labelTemp: "気温 (℃):",
+    labelHumidity: "湿度 (%):",
+    calculateBtn: "計算",
+    clearBtn: "クリア",
+    themeLabel: "ダークモード",
+    resultText: "WBGT値: "
+  },
+  "pt": {
+    title: "Verificador WBGT (Manual)",
+    labelTemp: "Temperatura (℃):",
+    labelHumidity: "Umidade (%):",
+    calculateBtn: "Calcular",
+    clearBtn: "Limpar",
+    themeLabel: "Modo Escuro",
+    resultText: "Valor WBGT: "
+  },
+  "id": {
+    "title": "Pemeriksa WBGT Manual",
+    "labelTemp": "Suhu (℃):",
+    "labelHumidity": "Kelembapan (%):",
+    "calculateBtn": "Hitung",
+    "clearBtn": "Bersihkan",
+    "themeLabel": "Mode Gelap",
+    "resultText": "Nilai WBGT: "
+},
+  "en": {
+    title: "WBGT Checker (Manual)",
+    labelTemp: "Temperature (℃):",
+    labelHumidity: "Humidity (%):",
+    calculateBtn: "Calculate",
+    clearBtn: "Clear",
+    themeLabel: "Dark Mode",
+    resultText: "WBGT Value: "
+  }
+};
+
+
+function calculateWBGT() {
+  const temp = document.getElementById("temperature").value;
+  const humidity = document.getElementById("humidity").value;
+  const resultBox = document.getElementById("result-box");
+  const result = document.getElementById("result");
+  const lang = document.getElementById("language-select").value;
+
+  if (wbgtTable[temp] && wbgtTable[temp][humidity]) {
+    const wbgt = wbgtTable[temp][humidity];
+    let bgColor = "#fff";
+    let label = "";
+
+    if (wbgt <= 20.9) { bgColor = "#538DD5"; label = alertLabels[lang][0]; }
+    else if (wbgt >= 21 && wbgt <= 24.9) { bgColor = "#C5D9F1"; label = alertLabels[lang][1]; }
+    else if (wbgt >= 25 && wbgt <= 27.9) { bgColor = "#FFFF00"; label = alertLabels[lang][2]; }
+    else if (wbgt >= 28 && wbgt <= 30.9) { bgColor = "#FFC000"; label = alertLabels[lang][3]; }
+    else if (wbgt >= 31) { bgColor = "#FF0000"; label = alertLabels[lang][4]; }
+
+    resultBox.style.display = "block";
+    resultBox.style.backgroundColor = bgColor;
+    result.innerHTML = "WBGT: " + wbgt + "℃<br><strong>" + label + "</strong>";
+  } else {
+    resultBox.style.display = "block";
+    resultBox.style.backgroundColor = "#fff";
+    result.textContent = translations[lang].resultText + "N/A";
+  }
+}
+
+function clearFields() {
+  document.getElementById("temperature").value = "";
+  document.getElementById("humidity").value = "";
+  const resultBox = document.getElementById("result-box");
+  resultBox.style.display = "none";
+  document.getElementById("result").textContent = "";
+}
+
+function clearFields( {
+  document.getElementById("temperature").value = "";
+  document.getElementById("humidity").value = "";
+  document.getElementById("result").textContent = "";
+}
+
+function toggleTheme() {
+  document.body.classList.toggle("dark-mode");
+}
+
+let lang = "ja";
+function changeLanguage() {
+  lang = document.getElementById("language-select").value;
+  document.getElementById("title").textContent = translations[lang].title;
+  document.getElementById("label-temp").textContent = translations[lang].labelTemp;
+  document.getElementById("label-humidity").textContent = translations[lang].labelHumidity;
+  document.getElementById("calculate-btn").textContent = translations[lang].calculateBtn;
+  document.getElementById("clear-btn").textContent = translations[lang].clearBtn;
+  document.getElementById("theme-label").textContent = translations[lang].themeLabel;
+}
