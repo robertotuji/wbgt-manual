@@ -7,8 +7,8 @@ const translations = {
         clear: "クリア",
         dark: "ダークモード",
         invalidInput: "有効な温度と湿度を入力してください。",
-        tempOutOfRange: "WBGTテーブルに値が記録されていないため、温度は21°Cから40°Cの間である必要があります。", // CORRIGIDO: Tradução em japonês
-        humOutOfRange: "WBGTテーブルに値が記録されていないため、相対湿度は20%から100%の間で、5刻みである必要があります。", // CORRIGIDO: Tradução em japonês
+        tempOutOfRange: "WBGTテーブルに値が記録されていないため、温度は21°Cから40°Cの間である必要があります。",
+        humOutOfRange: "WBGTテーブルに値が記録されていないため、相対湿度は20%から100%の間で、5刻みである必要があります。",
         levels: [
             "ほぼ安全",
             "注意",
@@ -61,8 +61,8 @@ const translations = {
         clear: "Bersihkan",
         dark: "Mode Gelap",
         invalidInput: "Mohon masukkan nilai Suhu dan Kelembaban yang valid.",
-        tempOutOfRange: "Suhu harus antara 21°C dan 40°C, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.", // CORRIGIDO: Tradução em indonésio
-        humOutOfRange: "Kelembaban relatif harus antara 20% dan 100%, dengan interval 5, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.", // CORRIGIDO: Tradução em indonésio
+        tempOutOfRange: "Suhu harus antara 21°C dan 40°C, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.",
+        humOutOfRange: "Kelembaban relatif harus antara 20% dan 100%, dengan interval 5, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.",
         levels: [
             "Hampir Aman",
             "Waspada",
@@ -90,7 +90,6 @@ async function loadWbgtData() {
         console.log("Dados WBGT carregados com sucesso!");
     } catch (error) {
         console.error("Erro ao carregar os dados WBGT:", error);
-        // Mantém o alert original para erros de carregamento da tabela, que são mais graves.
         alert("Erro ao carregar a tabela de WBGT. Por favor, tente novamente mais tarde.");
     }
 }
@@ -107,6 +106,7 @@ function hideError() {
     errorMessageBox.classList.add("hidden");
     errorMessage.innerHTML = "";
 }
+
 
 function calculateWBGT(temp, hum) {
     if (Object.keys(wbgtData).length === 0) {
@@ -234,6 +234,12 @@ document.getElementById("calculate").addEventListener("click", () => {
 
     resultBox.classList.remove("hidden");
     resultBox.style.backgroundColor = color;
+    // Lógica para definir a cor do texto (adicionada aqui)
+    if (color === "#538DD5" || color === "#FF0000") { // Cores azul claro (Quase Seguro) e vermelho (Perigo)
+        resultBox.classList.add("dark-bg-text-white");
+    } else {
+        resultBox.classList.remove("dark-bg-text-white");
+    }
     result.innerHTML = `WBGT: ${wbgt}°C<br><strong>${label}</strong>`;
 });
 
