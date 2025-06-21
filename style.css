@@ -1,8 +1,8 @@
 html, body {
-    height: 100vh; /* Garante que HTML e Body ocupem 100% da altura da viewport */
-    overflow: hidden; /* Impede a rolagem, o que pode evitar o desalinhamento */
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%; /* Garante que html e body ocupem a altura total */
 }
 
 body {
@@ -10,10 +10,11 @@ body {
     background-color: #f4f4f4;
     color: #333;
     display: flex;
+    flex-direction: column; /* Define como coluna para centralizar verticalmente */
     justify-content: center;
     align-items: center;
-    /* Remover 'height: 100vh;' daqui pois já está no html,body acima */
-    /* Remover 'margin: 0;' daqui pois já está no html,body acima */
+    min-height: 100vh; /* Garante que o body ocupe no mínimo a altura da viewport */
+    overflow: hidden; /* Impede a rolagem do body principal */
 }
 
 .container {
@@ -23,13 +24,15 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 300px;
     text-align: center;
-    /* Adicionar um max-height e overflow para o container se ele for muito grande
-       e precisar de rolagem interna, mas o ideal é que ele se ajuste.
-       Se ele for maior que a tela, ainda haverá um problema. */
-    max-height: 95vh; /* Limita a altura máxima para que ele não tente rolar muito */
-    overflow-y: auto; /* Permite rolagem INTERNA se o conteúdo for muito grande para a tela */
+    box-sizing: border-box;
+    /* Ajustes para rolagem interna e altura no celular */
+    flex-shrink: 0; /* Impede que o container encolha além do necessário */
+    max-height: 95vh; /* Permite que o container se ajuste à altura da tela */
+    overflow-y: auto; /* Permite rolagem vertical DENTRO do container */
     -webkit-overflow-scrolling: touch; /* Melhora a rolagem em iOS */
+    position: relative; /* Pode ajudar no posicionamento relativo se houver elementos fixos */
 }
+
 
 button {
     width: 100%;
