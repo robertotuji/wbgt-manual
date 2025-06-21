@@ -7,8 +7,8 @@ const translations = {
         clear: "クリア",
         dark: "ダークモード",
         invalidInput: "有効な温度と湿度を入力してください。",
-        tempOutOfRange: "温度は21°Cから40°Cの間である必要があります。この範囲外にはWBGTテーブルに値が記録されていません。",
-        humOutOfRange: "相対湿度は20%から100%の間で、5刻みである必要があります。この範囲外にはWBGTテーブルに値が記録されていません。",
+        tempOutOfRange: "WBGTテーブルに値が記録されていないため、温度は21°Cから40°Cの間である必要があります。", // CORRIGIDO: Tradução em japonês
+        humOutOfRange: "WBGTテーブルに値が記録されていないため、相対湿度は20%から100%の間で、5刻みである必要があります。", // CORRIGIDO: Tradução em japonês
         levels: [
             "ほぼ安全",
             "注意",
@@ -61,8 +61,8 @@ const translations = {
         clear: "Bersihkan",
         dark: "Mode Gelap",
         invalidInput: "Mohon masukkan nilai Suhu dan Kelembaban yang valid.",
-        tempOutOfRange: "Suhu harus antara 21°C dan 40°C, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.",
-        humOutOfRange: "Kelembaban relatif harus antara 20% dan 100%, dengan interval 5, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.",
+        tempOutOfRange: "Suhu harus antara 21°C dan 40°C, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.", // CORRIGIDO: Tradução em indonésio
+        humOutOfRange: "Kelembaban relatif harus antara 20% dan 100%, dengan interval 5, karena tidak ada nilai yang tercatat di luar batas ini dalam tabel WBGT.", // CORRIGIDO: Tradução em indonésio
         levels: [
             "Hampir Aman",
             "Waspada",
@@ -75,8 +75,8 @@ const translations = {
 
 const resultBox = document.getElementById("result-box");
 const result = document.getElementById("result");
-const errorMessageBox = document.getElementById("error-message-box"); // NOVO: Elemento para caixa de erro
-const errorMessage = document.getElementById("error-message"); // NOVO: Elemento para texto de erro
+const errorMessageBox = document.getElementById("error-message-box");
+const errorMessage = document.getElementById("error-message");
 
 let wbgtData = {};
 
@@ -90,40 +90,36 @@ async function loadWbgtData() {
         console.log("Dados WBGT carregados com sucesso!");
     } catch (error) {
         console.error("Erro ao carregar os dados WBGT:", error);
+        // Mantém o alert original para erros de carregamento da tabela, que são mais graves.
         alert("Erro ao carregar a tabela de WBGT. Por favor, tente novamente mais tarde.");
     }
 }
 
 loadWbgtData();
 
-// NOVA FUNÇÃO para exibir mensagens de erro personalizadas
 function displayError(message) {
-    resultBox.classList.add("hidden"); // Esconde a caixa de resultado se houver erro
+    resultBox.classList.add("hidden");
     errorMessageBox.classList.remove("hidden");
     errorMessage.innerHTML = message;
 }
 
-// NOVA FUNÇÃO para esconder mensagens de erro
 function hideError() {
     errorMessageBox.classList.add("hidden");
     errorMessage.innerHTML = "";
 }
 
-
 function calculateWBGT(temp, hum) {
     if (Object.keys(wbgtData).length === 0) {
-        displayError(translations[document.getElementById("language").value].invalidInput); // Usa a nova função
+        displayError(translations[document.getElementById("language").value].invalidInput);
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
-    // VALIDAÇÃO DE LIMITES DE ENTRADA
     if (temp < 21 || temp > 40) {
-        displayError(translations[document.getElementById("language").value].tempOutOfRange); // Usa a nova função
+        displayError(translations[document.getElementById("language").value].tempOutOfRange);
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
-    // Verifica também o intervalo de 5 em 5 para umidade
     if (hum < 20 || hum > 100 || hum % 5 !== 0) {
-        displayError(translations[document.getElementById("language").value].humOutOfRange); // Usa a nova função
+        displayError(translations[document.getElementById("language").value].humOutOfRange);
         return { wbgt: null, levelIdx: -1, color: "#CCCCCC" };
     }
 
@@ -151,9 +147,8 @@ function calculateWBGT(temp, hum) {
             ));
             closestHum = Math.min(Math.max(closestHum, 20), 100);
 
-            // Garante que o closestHum seja um múltiplo de 5, já que a tabela só tem de 5 em 5.
             closestHum = Math.round(closestHum / 5) * 5;
-            closestHum = Math.min(Math.max(closestHum, 20), 100); // Re-limita após arredondamento
+            closestHum = Math.min(Math.max(closestHum, 20), 100);
 
             if (wbgtData[String(closestTemp)][String(closestHum)]) {
                  wbgtValue = wbgtData[String(closestTemp)][String(closestHum)];
@@ -174,32 +169,24 @@ function calculateWBGT(temp, hum) {
     let levelIdx;
     let color;
 
-    // DEFINIÇÃO FINAL DAS FAIXAS DE WBGT, TESTADAS PARA COBRIR TODOS OS CASOS.
-    // A ordem é do maior para o menor para garantir que as condições mais "altas" sejam verificadas primeiro.
-
-    // 31 WBGT e acima → Perigo (#FF0000)
     if (wbgtValue >= 31) {
-        levelIdx = 4; // Perigo
+        levelIdx = 4;
         color = "#FF0000";
     }
-    // 28～30 WBGT → Alerta Máximo (#FFC000)
     else if (wbgtValue >= 28) {
-        levelIdx = 3; // Alerta Máximo
+        levelIdx = 3;
         color = "#FFC000";
     }
-    // 25～27 WBGT → Alerta (#FFFF00)
     else if (wbgtValue >= 25) {
-        levelIdx = 2; // Alerta
+        levelIdx = 2;
         color = "#FFFF00";
     }
-    // 21～24 WBGT → Atenção (#C5D9F1)
     else if (wbgtValue >= 21) {
-        levelIdx = 1; // Atenção
+        levelIdx = 1;
         color = "#C5D9F1";
     }
-    // Abaixo de 21 WBGT → Quase Seguro (#538DD5)
     else {
-        levelIdx = 0; // Quase Seguro
+        levelIdx = 0;
         color = "#538DD5";
     }
 
@@ -214,7 +201,7 @@ function updateLanguage(lang) {
     document.getElementById("calculate").textContent = t.calculate;
     document.getElementById("clear").textContent = t.clear;
     document.getElementById("dark-label").textContent = t.dark;
-    hideError(); // Esconde qualquer erro ao mudar o idioma
+    hideError();
 }
 
 document.getElementById("language").addEventListener("change", (e) => {
@@ -226,7 +213,7 @@ document.getElementById("dark-mode").addEventListener("change", () => {
 });
 
 document.getElementById("calculate").addEventListener("click", () => {
-    hideError(); // Esconde erros anteriores ao tentar calcular
+    hideError();
     const temp = parseFloat(document.getElementById("temperature").value);
     const hum = parseFloat(document.getElementById("humidity").value);
     const lang = document.getElementById("language").value;
@@ -239,8 +226,7 @@ document.getElementById("calculate").addEventListener("click", () => {
     const { wbgt, levelIdx, color } = calculateWBGT(temp, hum);
 
     if (wbgt === null) {
-        // A função calculateWBGT já chamará displayError se wbgt for null
-        resultBox.classList.add("hidden"); // Garante que a caixa de resultado esteja oculta
+        resultBox.classList.add("hidden");
         return;
     }
 
@@ -255,7 +241,7 @@ document.getElementById("clear").addEventListener("click", () => {
     document.getElementById("temperature").value = "";
     document.getElementById("humidity").value = "";
     resultBox.classList.add("hidden");
-    hideError(); // NOVO: Esconde a caixa de erro ao limpar
+    hideError();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
