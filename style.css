@@ -42,6 +42,8 @@ button {
     padding: 15px;
     border-radius: 8px;
     font-weight: bold;
+    /* Remover 'color: white;' daqui se existir de alguma tentativa anterior,
+       pois agora a cor será controlada pela classe .dark-bg-text-white */
 }
 
 /* Estilos para a nova caixa de mensagem de erro */
@@ -54,7 +56,6 @@ button {
     background-color: #dc3545; /* Vermelho para erros */
     text-align: center;
 }
-
 
 .hidden {
     display: none;
@@ -74,6 +75,11 @@ input, select {
 
 .dark-mode .container {
     background-color: #333;
+    color: white;
+}
+
+/* Nova regra para o texto da caixa de resultado em fundos escuros/vibrantes */
+.dark-bg-text-white {
     color: white;
 }
 
